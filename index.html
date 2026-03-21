@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SOIL CRC Benefit-Cost Analysis Tool</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+  <header class="site-header">
+    <div class="container header-shell">
+      <div class="brand-wrap">
+        <img src="logo_university_newcastle.jpg" alt="University of Newcastle logo" class="brand-logo brand-logo-uon">
+        <div class="brand-copy">
+          <div class="eyebrow">SOIL CRC</div>
+          <h1>Benefit-Cost Analysis Tool</h1>
+        </div>
+        <img src="logo_soil_crc.png" alt="SOIL CRC logo" class="brand-logo brand-logo-soil">
+      </div>
+    </div>
+    <nav class="container tabs" aria-label="Primary tabs">
+      <button class="tab active" data-tab="intro">Introduction</button>
+      <button class="tab" data-tab="data">Data</button>
+      <button class="tab" data-tab="settings">Settings</button>
+      <button class="tab" data-tab="results">Results</button>
+      <button class="tab" data-tab="sensitivity">Sensitivity</button>
+      <button class="tab" data-tab="report">Report</button>
+      <button class="tab" data-tab="help">Help</button>
+    </nav>
+  </header>
+
+  <main class="container main-area">
+    <section id="tab-intro" class="panel active">
+      <div class="hero card intro-hero">
+        <div class="hero-left">
+          <div class="hero-badge">Version 2026.01</div>
+          <h2>SOIL CRC BCA Analytical Tool</h2>
+          <p class="lead">A practical Benefit-Cost Analysis tool for agricultural production trials. This release uses the official trial workbook structure, sums direct cost components from the Excel file, supports clear treatment comparison, flexible discounting, sensitivity testing, integrated reporting, and a guided workflow for farmers, advisers, researchers, and project partners.</p>
+          <div class="hero-actions">
+            <button class="btn btn-ghost jump" data-target="data" type="button">Open data steps</button>
+            <button class="btn btn-ghost jump" data-target="results" type="button">Open results</button>
+            <button class="btn btn-ghost jump" data-target="report" type="button">Open report</button>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="cover-panel">
+            <h3>Publisher and developer</h3>
+            <p>Frank Wogbe Agbola, The University of Newcastle, Australia</p>
+            <h3>Co-developer</h3>
+            <p>Dr Mesfin Genie, The University of Newcastle, Australia</p>
+            <h3>Contact</h3>
+            <p>Email any feedback, comments and suggestions, quoting version 2026.01, to Frank.Agbola@newcastle.edu.au</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <article class="card prose">
+          <h3>About this tool</h3>
+          <p>The Soil CRC BCA Tool was developed as part of the CRC High Performance Soils Project 1.2.008, Packaging Soil CRC tools to enhance the extension and adoption of improved soil management practices.</p>
+          <p>Use the tool together with the Guide. The Guide explains each tab, the formulas used in the calculations, the meaning of each metric, and worked examples based on the included example dataset.</p>
+          <p>The current version focuses on direct benefits and direct costs. Direct costs are calculated by summing the individual cost components in the workbook. Key outputs include present value of benefits, present value of costs, net present value, benefit-cost ratio, gross profit margin, and return on investment.</p>
+        </article>
+        <article class="card prose">
+          <h3>How the workflow works</h3>
+          <p>Download the standard template, enter one row for each replicate in the Trial_Data sheet, save the workbook, upload it, review the validation notes, complete the project information section, set the analysis choices in the Settings tab, run the analysis, and then review the results, graphs, and report.</p>
+          <p>Bottom-right pop-up messages appear when a workbook is uploaded, example data is loaded, settings are applied, analysis is run, report files are prepared, or a validation issue needs attention.</p>
+        </article>
+      </div>
+
+      <div class="grid two">
+        <article class="card prose">
+          <h3>Acknowledgements</h3>
+          <p>Thanks to the project team members, Simon Kruger as Project Lead, and representatives of Western Midlands Group, Riverine Plains Incorporated, Corrigin Farm Improvement Group, Agricultural Innovation Research and Research Eyre, University of Tasmania, and Murdoch University.</p>
+          <p>CRC for High Performance Soils acknowledges the Australian Government for funding obtained through the CRC Program and all partners and members of the Soil CRC. We also acknowledge the support and valuable contributions gained from industry partners of the Soil CRC in developing the Soil BCA Analytical Tool.</p>
+        </article>
+        <article class="card prose">
+          <h3>Disclaimer and copyright</h3>
+          <p>The CRC for High Performance Soils has endeavoured to ensure that the tool provides the benefits and costs of using soil amendments and management practices in crop production. It makes no warranty regarding the accuracy of the information provided and will not be liable if the information is inaccurate, incomplete or out of date, nor will it be liable for any direct or indirect damages arising from its use. The outputs of the BCA Tool and related summary report should not be used as a substitute for seeking independent professional advice.</p>
+          <p>This BCA Tool is copyright to the Cooperative Research Centre for High Performance Soils. Apart from any use permitted under the Australian Copyright Act 1968, no part of it may be reproduced by any process without written permission from the publisher.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="tab-data" class="panel">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>Data upload and project information</h2>
+            <p class="subtle">Complete these steps in order. The same project information is used at the start of the report.</p>
+          </div>
+          <div class="section-actions">
+            <a class="btn btn-ghost" href="soil_crc_bca_template.xlsx" download id="downloadTemplateBtn" title="Download the standard Excel template">Download template</a>
+            <button class="btn" id="openUploadBtn" type="button" title="Upload a completed Excel workbook">Upload workbook</button>
+            <button class="btn btn-ghost" id="loadExampleBtn" type="button" title="Load the included example workbook and pre-fill the tool">Load example data</button>
+            <input id="fileInput" type="file" accept=".xlsx" hidden />
+          </div>
+        </div>
+
+        <div class="grid four step-grid">
+          <div class="step card soft"><span class="step-no">1</span><h3>Download the template</h3><p>Use the official Excel file supplied with this tool. It contains the Trial_Data sheet and a data dictionary sheet to help with data entry.</p></div>
+          <div class="step card soft"><span class="step-no">2</span><h3>Fill one row per replicate</h3><p>Each replicate should have its own row. Keep amendment names and treatment IDs consistent across replicates. The control is identified from the control treatment row in the workbook.</p></div>
+          <div class="step card soft"><span class="step-no">3</span><h3>Save and upload</h3><p>Save the completed file before uploading it back into the tool. This helps avoid incomplete workbook errors.</p></div>
+          <div class="step card soft"><span class="step-no">4</span><h3>Complete project details</h3><p>Enter the project details below so they can appear in the report and in the Word or PDF-ready export.</p></div>
+        </div>
+
+        <div class="upload-box">
+          <button class="upload-tile" id="uploadTile" type="button" title="Click to upload your completed Excel workbook">
+            <strong>Upload completed workbook</strong>
+            <span>Click to choose the Excel workbook you have completed.</span>
+          </button>
+          <div id="uploadStatus" class="status neutral">No workbook uploaded yet.</div>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <article class="card">
+          <h3>Workbook summary</h3>
+          <div class="metrics-grid mini">
+            <div class="metric"><span>Workbook</span><strong id="workbookName">-</strong></div>
+            <div class="metric"><span>Sheet used</span><strong id="sheetName">-</strong></div>
+            <div class="metric"><span>Rows</span><strong id="rowsCount">-</strong></div>
+            <div class="metric"><span>Treatments</span><strong id="treatmentsCount">-</strong></div>
+            <div class="metric"><span>Control rows</span><strong id="controlsCount">-</strong></div>
+            <div class="metric"><span>Rows with yield</span><strong id="yieldCount">-</strong></div>
+          </div>
+          <div id="validationBox" class="message info">Upload a workbook to see validation messages.</div>
+        </article>
+        <article class="card prose">
+          <h3>What the tool checks</h3>
+          <p><span class="tip" data-tip="The workbook should contain a Trial_Data sheet and the standard header row.">Template structure</span> The workbook should contain the standard Trial_Data layout.</p>
+          <p><span class="tip" data-tip="Treatment names should be consistent across replicate rows for the same treatment.">Treatment consistency</span> Treatment names, IDs and control flags should be filled in clearly.</p>
+          <p><span class="tip" data-tip="The tool uses the main direct cost components reported in the workbook, such as seed, total labour, total machinery, fertiliser, pesticides, fuel, marketing, repairs and maintenance, support services, electricity, water, insurance services, overheads, interest paid on loans, structure maintenance, and other costs.">Costs</span> Yield and direct cost values should be numeric where they are provided.</p>
+          <p><span class="tip" data-tip="A control is needed so the tool can compare treatments against a reference practice.">Control rows</span> At least one control row should be present for the control treatment.</p>
+        </article>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h3>Project details for the report</h3>
+            <p class="subtle">These fields are shown at the beginning of the report and help tailor the narrative to the project.</p>
+          </div>
+        </div>
+        <div class="form-grid wide-grid">
+          <label><span>Name of project</span><input id="projectName" type="text" placeholder="Enter the project name" /></label>
+          <label><span>Name of collaborators</span><input id="collaborators" type="text" placeholder="Enter the collaborators or project team" /></label>
+          <label><span>Funding agency</span><input id="fundingAgency" type="text" placeholder="Enter the funding agency" /></label>
+          <label class="full"><span>Project summary (up to 100 words)</span><textarea id="projectSummary" rows="4" maxlength="800" placeholder="Summarise the project purpose, trial focus, and intended use of the results."></textarea></label>
+          <label class="full"><span>Brief description of methodology of project (site description, duration of project or field trial, agronomic and management practices, up to 200 words)</span><textarea id="projectMethodology" rows="6" maxlength="1600" placeholder="Describe the trial site, duration, treatments, agronomic management, and other practical details that should appear in the report."></textarea></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h3>Data preview</h3>
+            <p class="subtle">The first cleaned rows from the uploaded workbook are shown below.</p>
+          </div>
+          <div class="section-actions">
+            <button class="btn btn-ghost" id="downloadCsvBtn" type="button" disabled title="Download the cleaned data used by the tool as a CSV file">Download cleaned CSV</button>
+          </div>
+        </div>
+        <div class="table-wrap"><table id="previewTable"><thead></thead><tbody></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="tab-settings" class="panel">
+      <div class="grid two">
+        <div class="card">
+          <h2>Settings</h2>
+          <div class="form-grid">
+            <label><span>Grain price ($ per tonne)</span><input id="grainPrice" type="number" value="500" step="0.01" /></label>
+            <label><span>Analysis period (years)</span><input id="analysisYears" type="number" value="10" min="1" step="1" /></label>
+            <label><span>Discounting mode</span><select id="discountMode"><option value="constant">Constant rate</option><option value="increasing">Increasing rate</option><option value="declining">Declining rate</option></select></label>
+            <label><span>Initial annual discount rate (%)</span><input id="discountInitial" type="number" value="5" step="0.1" /></label>
+            <label><span>Later annual discount rate (%)</span><input id="discountLater" type="number" value="3" step="0.1" /></label>
+            <label><span>Switch year</span><input id="discountSwitchYear" type="number" value="5" min="1" step="1" /></label>
+          </div>
+          <div class="settings-actions">
+            <button class="btn" id="applySettingsBtn" type="button" title="Apply the current analysis settings and update the tool">Apply settings</button>
+          </div>
+          <div id="settingsStatus" class="message info" aria-live="polite">Current settings are shown above. Click Apply settings to confirm and refresh the analysis.</div>
+        </div>
+        <div class="card prose">
+          <h3>How discounting is applied</h3>
+          <p><span class="tip" data-tip="A constant rate uses the same annual discount rate for every year in the analysis period.">Constant rate</span> The same discount rate is used for every year.</p>
+          <p><span class="tip" data-tip="An increasing schedule applies the initial rate up to the switch year and the later rate after that point.">Increasing rate</span> The initial rate applies first, then the later rate applies after the switch year.</p>
+          <p><span class="tip" data-tip="A declining schedule also uses the switch year, but the later rate is lower than the initial rate.">Declining rate</span> This works in the same way, but with a lower later rate after the switch year.</p>
+          <div class="logic-box" id="discountLabelBox">The active discount schedule will be shown here after analysis is run.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-results" class="panel">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>Results</h2>
+            <p class="subtle">Choose the comparison mode, then run the analysis. The full table below reports all treatment results.</p>
+          </div>
+          <div class="section-actions">
+            <button class="btn" id="runBtn" type="button" title="Calculate rankings, comparisons and headline metrics">Run Benefit-Cost Analysis</button>
+            <button class="btn btn-ghost jump" data-target="report" id="reportAllBtn" type="button" title="Open the report tab with all treatment results">Report all treatment results</button>
+          </div>
+        </div>
+        <div class="mode-row">
+          <label><input type="radio" name="compareMode" value="control" checked /> Compare selected treatment against control</label>
+          <label><input type="radio" name="compareMode" value="side" /> Compare two treatments side by side</label>
+        </div>
+        <div id="compareControlPanel" class="selector-grid">
+          <label><span>Reference control</span><select id="controlSelect"></select></label>
+          <label><span>Treatment to compare</span><select id="treatmentSelect"></select></label>
+        </div>
+        <div id="compareSidePanel" class="selector-grid hidden">
+          <label><span>First treatment</span><select id="sideTreatmentA"></select></label>
+          <label><span>Second treatment</span><select id="sideTreatmentB"></select></label>
+        </div>
+        <div id="sameTreatmentWarning" class="message warning hidden">Please choose two different treatments for side by side comparison.</div>
+      </div>
+
+      <div class="grid three results-grid">
+        <div class="card metric-card"><span>Present value of benefits</span><strong id="pvBenefits">-</strong></div>
+        <div class="card metric-card"><span>Present value of costs</span><strong id="pvCosts">-</strong></div>
+        <div class="card metric-card"><span>Net present value</span><strong id="npvValue">-</strong></div>
+        <div class="card metric-card"><span>Benefit-cost ratio</span><strong id="bcrValue">-</strong></div>
+        <div class="card metric-card"><span>Gross profit margin</span><strong id="gpmValue">-</strong></div>
+        <div class="card metric-card"><span>Return on investment</span><strong id="roiValue">-</strong></div>
+        <div class="card metric-card"><span>Difference versus control</span><strong id="deltaValue">-</strong></div>
+      </div>
+
+      <div class="grid two">
+        <div class="card"><h3>Headline interpretation</h3><p id="headlineSummary" class="summary-box">Upload data and run the analysis to view the headline interpretation.</p></div>
+        <div class="card"><h3>Comparison details</h3><div class="table-wrap compact"><div id="comparisonDetails"></div></div></div>
+      </div>
+
+      <div class="card">
+        <h3>Treatment ranking</h3>
+        <div class="table-wrap compact"><table id="rankingTable"><thead><tr><th>Rank</th><th>Treatment</th><th>Average yield (t/ha)</th><th>Average direct costs ($/ha)</th><th>PV benefits ($/ha)</th><th>PV costs ($/ha)</th><th>NPV ($/ha)</th><th>BCR</th><th>Gross profit margin (%)</th><th>ROI (%)</th><th>Difference versus control ($/ha)</th></tr></thead><tbody></tbody></table></div>
+      </div>
+
+      <div class="grid two chart-grid">
+        <div class="card"><h3>BCR graph</h3><div id="chartBcr" class="chart-box"></div></div>
+        <div class="card"><h3>NPV graph</h3><div id="chartNpv" class="chart-box"></div></div>
+        <div class="card"><h3>NPV difference from control</h3><div id="chartDelta" class="chart-box"></div></div>
+        <div class="card"><h3>Gross profit margin graph</h3><div id="chartGpm" class="chart-box"></div></div>
+        <div class="card"><h3>ROI graph</h3><div id="chartRoi" class="chart-box"></div></div>
+      </div>
+    </section>
+
+    <section id="tab-sensitivity" class="panel">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>Sensitivity analysis</h2>
+            <p class="subtle">Enter alternative values directly to test how the selected treatment responds.</p>
+          </div>
+          <div class="section-actions"><button class="btn" id="runSensitivityBtn" type="button">Update sensitivity</button></div>
+        </div>
+        <div class="table-wrap">
+          <table class="settings-table">
+            <thead><tr><th>Scenario</th><th>Discount rate (%)</th><th>Grain price ($/t)</th><th>Benefits change (%)</th><th>Costs change (%)</th></tr></thead>
+            <tbody>
+              <tr><td>Scenario 1</td><td><input id="s1Rate" type="number" value="3" step="0.1" /></td><td><input id="s1Price" type="number" value="500" step="0.01" /></td><td><input id="s1Benefit" type="number" value="0" step="0.1" /></td><td><input id="s1Cost" type="number" value="0" step="0.1" /></td></tr>
+              <tr><td>Scenario 2</td><td><input id="s2Rate" type="number" value="5" step="0.1" /></td><td><input id="s2Price" type="number" value="550" step="0.01" /></td><td><input id="s2Benefit" type="number" value="10" step="0.1" /></td><td><input id="s2Cost" type="number" value="10" step="0.1" /></td></tr>
+              <tr><td>Scenario 3</td><td><input id="s3Rate" type="number" value="7" step="0.1" /></td><td><input id="s3Price" type="number" value="450" step="0.01" /></td><td><input id="s3Benefit" type="number" value="-10" step="0.1" /></td><td><input id="s3Cost" type="number" value="15" step="0.1" /></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap compact"><table id="sensitivityTable"><thead><tr><th>Scenario</th><th>Discount rate (%)</th><th>Grain price ($/t)</th><th>Benefits change (%)</th><th>Costs change (%)</th><th>PV benefits ($/ha)</th><th>PV costs ($/ha)</th><th>NPV ($/ha)</th><th>BCR</th><th>Gross profit margin (%)</th></tr></thead><tbody></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="tab-report" class="panel">
+      <div class="grid two">
+        <div class="card prose">
+          <div class="section-head">
+            <div>
+              <h2>Report</h2>
+              <p class="subtle">Part A reproduces the project information you entered in the Data tab. Part B combines the analysis with a narrative summary.</p>
+            </div>
+            <div class="section-actions">
+              <button class="btn" id="downloadWordBtn" type="button">Download Word report</button>
+              <button class="btn btn-ghost" id="openPdfReportBtn" type="button">Open PDF-ready report</button>
+            </div>
+          </div>
+          <h3>Part A: Project summary</h3>
+          <div id="reportProjectSummary" class="report-summary-box"></div>
+        </div>
+        <div class="card prose">
+          <h3>Part B: Summary source</h3>
+          <div class="form-grid single-grid report-form-grid">
+            <label><span>AI access</span>
+              <select id="aiAccessSelect">
+                <option value="none">I do not have access to ChatGPT or Copilot</option>
+                <option value="chatgpt">I have access to ChatGPT</option>
+                <option value="copilot">I have access to Copilot</option>
+              </select>
+            </label>
+            <label><span>Include logos at the bottom of the report</span>
+              <select id="includeReportLogos">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </label>
+          </div>
+          <p class="subtle">If you use ChatGPT or Copilot, open the prepared prompt, generate the narrative, then paste it back into the box below. If you do not have access, the tool can generate a local draft summary inside the report.</p>
+          <div class="section-actions">
+            <button class="btn" id="openChatGPTBtn" type="button">Open in ChatGPT</button>
+            <button class="btn btn-ghost" id="openCopilotBtn" type="button">Open in Copilot</button>
+            <button class="btn btn-ghost" id="copyPromptBtn" type="button">Copy prompt</button>
+            <button class="btn btn-ghost" id="generateLocalSummaryBtn" type="button">Generate local summary</button>
+            <button class="btn btn-ghost" id="refreshReportBtn" type="button">Refresh report preview</button>
+          </div>
+          <label class="full"><span>AI or local summary to include in the report</span><textarea id="reportNarrative" class="prompt-box" rows="14" spellcheck="true" placeholder="Paste the ChatGPT or Copilot summary here, or click Generate local summary."></textarea></label>
+          <details>
+            <summary>Prepared prompt</summary>
+            <textarea id="aiPromptPreview" class="prompt-box prompt-small" spellcheck="false"></textarea>
+          </details>
+        </div>
+      </div>
+
+      <div class="card prose">
+        <h3>Report preview</h3>
+        <div id="reportPreview" class="report-preview"></div>
+      </div>
+    </section>
+
+    <section id="tab-help" class="panel">
+      <div class="card prose">
+        <div class="section-head">
+          <div>
+            <h2>Help and FAQ</h2>
+            <p class="subtle">Practical help for farmers, advisers, and other users.</p>
+          </div>
+          <div class="section-actions">
+            <button class="btn" id="openGuideBtn" type="button" title="Open the full user guide in a new window">Open full guide</button>
+          </div>
+        </div>
+        <details open><summary>Why are my results missing?</summary><p>Results usually remain empty when no workbook has been uploaded, when no control rows are present, or when yield and direct cost values are missing for the selected treatments.</p></details>
+        <details><summary>Why is the ranking table empty?</summary><p>The ranking table is filled after you upload a workbook and click Run Benefit-Cost Analysis in the Results tab.</p></details>
+        <details><summary>How should I structure the uploaded workbook?</summary><p>Use the standard template from this tool. Enter one row per replicate in the Trial_Data sheet. Keep treatment names consistent and save the file before uploading it back into the tool.</p></details>
+        <details><summary>How are direct costs calculated?</summary><p>The tool sums the individual cost components in each replicate row, including seed, labour, machinery, fertiliser, chemical, fuel, marketing, repairs, support services, electricity, water, insurance, overheads, interest paid on loans, structure maintenance, and other direct costs. The reported total farm cost column is shown in the workbook for reference only.</p></details>
+        <details><summary>What do the outputs mean?</summary><p>Net present value shows benefits minus costs after discounting. Benefit-cost ratio compares discounted benefits with discounted costs. Gross profit margin shows the share of discounted benefits remaining after discounted costs are deducted. Return on investment shows net gains relative to discounted costs.</p></details>
+        <details><summary>How do the two comparison modes differ?</summary><p>The first mode compares a selected treatment against the control. The second mode compares any two treatments side by side. A warning appears if the same treatment is selected twice.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div>SOIL CRC Benefit-Cost Analysis Tool</div>
+      <div class="footer-logos">
+        <img src="logo_university_newcastle.jpg" alt="" class="footer-logo footer-logo-uon">
+        <img src="logo_soil_crc.png" alt="" class="footer-logo footer-logo-soil">
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

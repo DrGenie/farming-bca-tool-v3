@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOIL CRC BCA Tool Guide</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="guide-page">
+  <main class="container main-area">
+    <section class="card hero">
+      <div>
+        <div class="hero-badge">User guide</div>
+        <h2>SOIL CRC Benefit-Cost Analysis Tool Guide</h2>
+        <p class="lead">This guide explains what each tab does, how the formulas are used, what each metric means, and how to interpret the results. It is written so the tool can be used without needing someone else to explain it.</p>
+      </div>
+    </section>
+
+    <section class="card prose">
+      <h3>1. What the tool does</h3>
+      <p>The tool compares the financial performance of trial treatments using direct benefits and direct costs reported in the uploaded workbook. It converts yields into annual gross benefits using the grain price entered in the Settings tab, sums the direct cost components for each replicate row, discounts future annual benefits and annual costs over the analysis period, and reports the results using net present value, benefit-cost ratio, gross profit margin, return on investment, and the difference in net present value from the control treatment.</p>
+      <p>The tool is designed around the official Excel template. Each replicate must be entered on a separate row in the <strong>Trial_Data</strong> sheet. The results are most reliable when treatment names and treatment IDs are entered consistently across replicate rows.</p>
+    </section>
+
+    <section class="grid two">
+      <article class="card prose">
+        <h3>2. How each tab works</h3>
+        <p><strong>Introduction</strong> gives the purpose of the tool, acknowledgements, and the main workflow.</p>
+        <p><strong>Data</strong> is where you download the official template, upload the completed workbook, load example data, review validation messages, and enter the project details that appear at the beginning of the report.</p>
+        <p><strong>Settings</strong> is where you enter the grain price, analysis period, discounting mode, initial discount rate, later discount rate, and switch year. Clicking <strong>Apply settings</strong> updates the schedule used in the calculations.</p>
+        <p><strong>Results</strong> is where you run the analysis, compare a selected treatment against the control or compare two treatments side by side, review the ranking table, and inspect the graphs.</p>
+        <p><strong>Sensitivity</strong> lets you test alternative discount rates, grain prices, benefit changes, and cost changes for the selected treatment.</p>
+        <p><strong>Report</strong> brings the project details, analysis tables, graphs, and the written summary together. The report can be downloaded as a Word-compatible document or opened in a PDF-ready layout.</p>
+        <p><strong>Help</strong> provides quick answers to common questions.</p>
+      </article>
+      <article class="card prose">
+        <h3>3. Data entry rules</h3>
+        <p>Use one row per replicate. Keep the control treatment identified clearly as the control treatment. Keep treatment IDs and amendment names consistent across replicates for the same treatment. Yield and cost values should be numeric. The tool reads the cost components directly from the workbook and does not rely on a separate manually entered total cost value for analysis.</p>
+        <p>The report section in the Data tab is also important. The fields for the project name, collaborators, funding agency, project summary, and methodology description are carried through into the report and help explain the context of the trial and the meaning of the results.</p>
+      </article>
+    </section>
+
+    <section class="card prose">
+      <h3>4. Cost formula used by the tool</h3>
+      <p>For each replicate row, direct costs are calculated as the sum of the workbook cost components used by the tool:</p>
+      <p><strong>Direct cost per replicate</strong> = Seed cost + Total labour + Total machinery + Fertiliser + Pesticides + Fuel + Marketing + Repairs and maintenance + Support services + Electricity + Water + Insurance services + Overheads + Interest paid on loans + Structure maintenance + Other costs.</p>
+      <p>The tool then calculates the average direct cost for each treatment by averaging the replicate-level direct costs across all rows belonging to that treatment.</p>
+    </section>
+
+    <section class="grid two">
+      <article class="card prose">
+        <h3>5. Discounting formulas</h3>
+        <p>The tool assumes that the annual benefit and annual direct cost repeat each year over the chosen analysis period.</p>
+        <p><strong>Annual benefit per hectare</strong> = Average yield × Grain price</p>
+        <p><strong>Present value factor</strong> = Σ 1 / (1 + r<sub>t</sub>)<sup>t</sup>, where r<sub>t</sub> is the discount rate in year t.</p>
+        <p><strong>Present value of benefits</strong> = Annual benefit × Present value factor</p>
+        <p><strong>Present value of costs</strong> = Average direct cost × Present value factor</p>
+        <p><strong>Net present value</strong> = Present value of benefits − Present value of costs</p>
+      </article>
+      <article class="card prose">
+        <h3>6. Output formulas</h3>
+        <p><strong>Benefit-cost ratio</strong> = Present value of benefits / Present value of costs</p>
+        <p><strong>Gross profit margin (%)</strong> = (Present value of benefits − Present value of costs) / Present value of benefits × 100</p>
+        <p><strong>Return on investment (%)</strong> = (Present value of benefits − Present value of costs) / Present value of costs × 100</p>
+        <p><strong>Difference versus control</strong> = Treatment NPV − Control NPV</p>
+        <p>A higher NPV is better. A BCR above 1 means discounted benefits are larger than discounted costs. A higher gross profit margin means a larger share of discounted benefits remains after costs. A higher ROI means a larger gain relative to discounted costs.</p>
+      </article>
+    </section>
+
+    <section class="card prose">
+      <h3>7. Detailed numerical example using the included trial data</h3>
+      <p>The example workbook included with the tool is based on the uploaded trial dataset. Under the default settings of a grain price of $500 per tonne, an analysis period of 10 years, and a constant discount rate of 5%, the discount factor used by the tool is:</p>
+      <p><strong>Present value factor</strong> = 1/1.05 + 1/1.05² + ... + 1/1.05¹⁰ ≈ 7.7217</p>
+      <p>Using the treatment <strong>T11 Manure</strong> from the example data:</p>
+      <p>Average yield = 3.3475 t/ha</p>
+      <p>Average direct cost = $813.97/ha</p>
+      <p>Annual benefit = 3.3475 × 500 = $1,673.75/ha</p>
+      <p>Present value of benefits = 1,673.75 × 7.7217 ≈ $12,924.25/ha</p>
+      <p>Present value of costs = 813.97 × 7.7217 ≈ $6,285.24/ha</p>
+      <p>Net present value = 12,924.25 − 6,285.24 ≈ $6,639.01/ha</p>
+      <p>Benefit-cost ratio = 12,924.25 / 6,285.24 ≈ 2.06</p>
+      <p>Gross profit margin = (12,924.25 − 6,285.24) / 12,924.25 × 100 ≈ 51.4%</p>
+      <p>Return on investment = (12,924.25 − 6,285.24) / 6,285.24 × 100 ≈ 105.6%</p>
+      <p>For the control treatment <strong>T00 Control</strong>, the example data produce an NPV of about $4,094.41/ha under the same settings. Therefore, the NPV difference from control for T11 Manure is:</p>
+      <p><strong>Difference versus control</strong> = 6,639.01 − 4,094.41 ≈ $2,544.60/ha</p>
+      <p>This means that, under the default assumptions used by the tool, T11 Manure produces about $2,544.60/ha more discounted net value than the control treatment over the 10-year analysis period.</p>
+    </section>
+
+    <section class="grid two">
+      <article class="card prose">
+        <h3>8. How to read the ranking table</h3>
+        <p>The ranking table sorts treatments from the highest NPV to the lowest NPV. This means the top treatment is the treatment with the strongest discounted net return under the assumptions currently entered into the tool. The ranking table also reports average yield, average direct costs, BCR, gross profit margin, ROI, and the NPV difference from the control so the user can see whether a treatment performs well because of higher yields, lower costs, or both.</p>
+      </article>
+      <article class="card prose">
+        <h3>9. How to read the graphs</h3>
+        <p>The BCR graph shows how strongly discounted benefits exceed discounted costs. The NPV graph shows overall discounted net value. The NPV difference from control graph shows how much better or worse each treatment performs relative to the control treatment. The gross profit margin graph shows the percentage of discounted benefits remaining after costs. The ROI graph shows net gain relative to discounted costs. Together, these graphs help users compare treatments quickly.</p>
+      </article>
+    </section>
+
+    <section class="card prose">
+      <h3>10. Sensitivity analysis</h3>
+      <p>The Sensitivity tab lets you test alternative assumptions without changing the original uploaded workbook. You can change the discount rate, grain price, benefit level, and cost level. This helps answer questions such as: What happens if prices fall? What happens if costs increase? What happens if the trial benefit is smaller than expected? The sensitivity table recalculates the key outputs under each scenario for the selected treatment.</p>
+    </section>
+
+    <section class="card prose">
+      <h3>11. Reporting workflow</h3>
+      <p>The Report tab combines two parts. Part A reproduces the project information entered in the Data tab. Part B combines the ranking table, sensitivity results, graphs, and a narrative summary. If you have access to ChatGPT or Copilot, the tool prepares a prompt and opens it in a new window. You can then paste the resulting text back into the tool so it becomes part of the report. If you do not have access, the tool can generate a local draft summary that can be edited before exporting.</p>
+      <p>The Word report download creates a Word-compatible document. The PDF-ready option opens a print-friendly version of the report so it can be saved as a PDF from the browser print dialog.</p>
+    </section>
+
+    <section class="card prose">
+      <h3>12. Common problems and what to do</h3>
+      <p>If the workbook cannot be read, make sure you are using the official template and that the file was saved before uploading. If results are blank, check that yield values and the cost fields are numeric and that the control treatment is present. If the ranking looks unexpected, review the grain price, analysis period, and discount settings. If the report preview is blank, run the analysis first and then refresh the report preview.</p>
+    </section>
+  </main>
+</body>
+</html>
